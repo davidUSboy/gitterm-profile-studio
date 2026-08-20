@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Generate a terminal-style developer card from public GitHub profile data." />
+  <meta name="theme-color" content="#020b07" />
+  <title>GitTerm Profile Studio</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://api.github.com" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="rain" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <main class="shell">
+    <header class="hero panel">
+      <div class="window-bar" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <p>GITTERM_PROFILE_STUDIO</p>
+      </div>
+
+      <div class="hero-content">
+        <p class="eyebrow">GITHUB REST API INTEGRATION // ONLINE</p>
+        <h1>Turn a public GitHub profile into a terminal identity card.</h1>
+        <p class="lede">
+          Inspect public developer data, surface useful signals, and export a reusable SVG card — directly in your browser.
+        </p>
+
+        <form id="profile-form" class="search" novalidate>
+          <label for="username">GitHub username</label>
+          <div class="input-row">
+            <span aria-hidden="true">&gt;</span>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              value="davidUSboy"
+              autocomplete="off"
+              spellcheck="false"
+              maxlength="39"
+              pattern="[A-Za-z0-9-]+"
+              placeholder="octocat"
+              aria-describedby="form-help"
+              required
+            />
+            <button type="submit">ANALYZE</button>
+          </div>
+          <p id="form-help" class="form-help">Public data only. No token is stored or requested.</p>
+        </form>
+      </div>
+    </header>
+
+    <section id="status" class="status panel" aria-live="polite">
+      <span class="status-dot"></span>
+      <p id="status-text">READY // ENTER A USERNAME</p>
+      <p id="rate-limit" class="rate-limit"></p>
+    </section>
+
+    <section id="result" class="result-grid" hidden>
+      <article class="panel identity-panel">
+        <div class="section-title">
+          <span>01</span>
+          <h2>IDENTITY</h2>
+        </div>
+
+        <div class="identity">
+          <img id="avatar" class="avatar" alt="GitHub avatar" />
+          <div>
+            <p id="login" class="login"></p>
+            <h3 id="name"></h3>
+            <p id="bio" class="bio"></p>
+            <a id="profile-link" class="terminal-link" target="_blank" rel="noreferrer">OPEN GITHUB PROFILE ↗</a>
+          </div>
+        </div>
+
+        <dl class="metadata">
+          <div><dt>LOCATION</dt><dd id="location">—</dd></div>
+          <div><dt>JOINED</dt><dd id="joined">—</dd></div>
+          <div><dt>COMPANY</dt><dd id="company">—</dd></div>
+          <div><dt>WEBSITE</dt><dd id="website">—</dd></div>
+        </dl>
+      </article>
+
+      <article class="panel metrics-panel">
+        <div class="section-title">
+          <span>02</span>
+          <h2>SIGNALS</h2>
+        </div>
+
+        <div class="metrics">
+          <div><strong id="repo-count">0</strong><span>PUBLIC REPOS</span></div>
+          <div><strong id="followers">0</strong><span>FOLLOWERS</span></div>
+          <div><strong id="stars">0</strong><span>TOTAL STARS</span></div>
+          <div><strong id="forks">0</strong><span>TOTAL FORKS</span></div>
+        </div>
+
+        <div class="language-block">
+          <p class="label">LANGUAGE SIGNAL</p>
+          <div id="languages" class="language-list"></div>
+        </div>
+      </article>
+
+      <article class="panel repos-panel">
+        <div class="section-title">
+          <span>03</span>
+          <h2>RECENT REPOSITORIES</h2>
+        </div>
+        <div id="repositories" class="repository-list"></div>
+      </article>
+
+      <article class="panel export-panel">
+        <div class="section-title">
+          <span>04</span>
+          <h2>EXPORT TERMINAL CARD</h2>
+        </div>
+
+        <div id="card-preview" class="card-preview" aria-label="Generated SVG card preview"></div>
+
+        <div class="actions">
+          <button id="download-svg" type="button">DOWNLOAD SVG</button>
+          <button id="copy-svg" type="button" class="secondary">COPY SVG SOURCE</button>
+        </div>
+
+        <p class="export-note">
+          Upload the SVG to your repository and embed it in a README with an ordinary image tag.
+        </p>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <p>GITTERM PROFILE STUDIO // BUILT WITH THE GITHUB REST API</p>
+      <nav aria-label="Project links">
+        <a href="./SUPPORT.md">SUPPORT</a>
+        <a href="./PRIVACY.md">PRIVACY</a>
+        <a href="https://docs.github.com/en/rest" target="_blank" rel="noreferrer">API DOCS ↗</a>
+      </nav>
+      <p class="disclaimer">Not affiliated with or endorsed by GitHub, Inc.</p>
+    </footer>
+  </main>
+
+  <template id="repository-template">
+    <a class="repository" target="_blank" rel="noreferrer">
+      <div>
+        <h3></h3>
+        <p></p>
+      </div>
+      <dl>
+        <div><dt>LANG</dt><dd class="repo-language">—</dd></div>
+        <div><dt>STARS</dt><dd class="repo-stars">0</dd></div>
+        <div><dt>UPDATED</dt><dd class="repo-updated">—</dd></div>
+      </dl>
+    </a>
+  </template>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
